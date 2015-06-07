@@ -1,6 +1,8 @@
-Docker - Symfony VM
+Docker - SiR VM
 ===
-**Build a local Virtual Machine (Docker aware) which allows you to run a Symfony full stack application in Ubuntu container on any OS (including Windows/Mac)**
+**Build a local Virtual Machine (Docker aware) which allows you to run SiR in Ubuntu container on any OS (including Windows/Mac)**
+
+**Docker - SiR VM is a fork from [Oliboy50/docker-symfony-vm](https://github.com/Oliboy50/docker-symfony-vm) to work with the Symfony application named SiR. For a generic Symfony application, use the base repository.**
 
 
 ## Requirements
@@ -24,7 +26,7 @@ It's also used to set some useful aliases in the VM (such as`docker-compose` whi
  - NodeJS 0.12 with `bower`, `gulp` and `grunt`
 
 ### docker-entrypoint.sh
-This file is the default ENTRYPOINT of the image. It will be executed each time you run this container. This is where you should put all your project specific stuffs that could help you building a perfect Symfony application (e.g. run services, run a Makefile, etc.).
+This file is the default ENTRYPOINT of the image. It will be executed each time you run this container. Here it starts our needed services nginx and php-fpm.
 
 ### docker-compose.yml
 This file (using Docker-compose) will help you to build a perfect environment for your Symfony app by running and linking several containers the way you want using a single command. 
@@ -35,8 +37,8 @@ Keep in mind that this could also be done using many long `docker` commands with
 
 ### First time
 
- 1. Clone this repository in a new folder (let's name it `docker`) **at the root of your Symfony application sources**, with:
-`git clone https://github.com/Oliboy50/docker-symfony-vm.git docker`
+ 1. Clone this repository in a `docker` folder at the root of SiR application sources, with:
+`git clone https://github.com/LinkValue/docker-sir.git docker`
 
  2. Go to the new folder `cd docker` and type `docker-machine-dev`
 If you followed the [Requirements](#requirements), after a few seconds you will be given access to the VM where you will be able to run `docker` commands
@@ -50,15 +52,27 @@ If you followed the [Requirements](#requirements), after a few seconds you will 
 `docker-compose-web` 
 (this is just an alias for `docker-compose run --service-ports web`)
 
- 6. If everything worked you should be able to see your Symfony application running in your host browser at 192.168.99.100 (you can check if it is the correct IP by running `docker-machine ip dev` in your host terminal)
+ 6. Now init SiR and install all dependencies with:
+
+        make init
+        make install
+
+ 7. If everything worked you just have to update your hosts file to point your VM IP (by default, it should be `192.168.99.100` but you can check if it is the correct IP by running `docker-machine ip dev` in your host terminal) to the domain names used for developing SiR. Here is what you should add to your hosts file:
+
+        192.168.99.100 linkr.sir.dev
+        192.168.99.100 huntr.sir.dev
+        192.168.99.100 dextr.sir.dev
+        192.168.99.100 api.sir.dev
+
+ 8. If everything worked you should be able to see your SiR application running in your host browser at `huntr.sir.dev`
 
 ### Second time and more
 
     # Host terminal
-    cd C:\Users\mySymfonyApp\docker
+    cd C:\Users\SiR\docker
     docker-machine-dev
     # VM terminal
-    cd /c/Users/mySymfonyApp/docker
+    cd /c/Users/SiR/docker
     docker-compose-web
 
 
@@ -73,9 +87,11 @@ If you followed the [Requirements](#requirements), after a few seconds you will 
 
  4. I'd also recommend to always run `Cmder` as an Administrator (right click => Properties, etc.). 
 
-**ProTips**: One of the many nice things you can do with Cmder is setting persistent aliases such as `alias cd-docker=cd "C:\path\to\my\sf_project\docker"` =). To view and manage your aliases, edit the file located at `C:\cmder_installation_directory\config\aliases`.
+**ProTips**: One of the many nice things you can do with Cmder is setting persistent aliases such as `alias cd-docker=cd "C:\Users\path\to\my\sir_project\docker"` =). To view and manage your aliases, edit the file located at `C:\cmder_installation_directory\config\aliases`.
 
 
 ## WTF!? You're using a Docker container as a VM!?
 Indeed, I could have split this big image in many smaller images (i.e. PHP5.6 linked with PHP-FPM linked with NGINX linked with NodeJS linked with Ruby, etc.) but I just wanted to keep it really simple and independent from the host OS. 
 This is meant to be a fast deployable development environment nothing else.
+
+

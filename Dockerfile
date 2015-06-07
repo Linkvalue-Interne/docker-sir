@@ -70,6 +70,14 @@ COPY nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 
 
 
+# Update permissions on SiR cache folders
+WORKDIR /dev/shm
+RUN \
+  mkdir session && \
+  chmod -R 777 session
+
+
+
 # Expose ports
 EXPOSE 80 443
 

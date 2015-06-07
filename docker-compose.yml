@@ -15,5 +15,5 @@ mysql:
   volumes:
     - /var/lib/mysql
   environment:
-    MYSQL_DATABASE: webapp
+    MYSQL_DATABASE: sir
     MYSQL_ALLOW_EMPTY_PASSWORD: yes
