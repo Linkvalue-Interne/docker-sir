@@ -1,0 +1,11 @@
+.dockerignore
+Dockerfile
+.git
+.gitignore
+.gitattributes
+.idea
+LICENSE
+README.md
+docker-machine-dev.bat
+docker-machine-dev.sh
+docker-compose.yml
