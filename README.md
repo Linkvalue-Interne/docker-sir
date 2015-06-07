@@ -35,7 +35,7 @@ Keep in mind that this could also be done using many long `docker` commands with
 
 ## How to use?
 
-### First time
+### First time (15min~30min depending on connection speed)
 
  1. Clone this repository in a `docker` folder at the root of SiR application sources, with:
 `git clone https://github.com/LinkValue/docker-sir.git docker`
@@ -56,6 +56,7 @@ If you followed the [Requirements](#requirements), after a few seconds you will 
 
         make init
         make install
+If it fails at `npm install`, [go here](#npm-install-fails-during-make-init) to fix it then redo this step.
 
  7. If everything worked you just have to update your hosts file to point your VM IP (by default, it should be `192.168.99.100` but you can check if it is the correct IP by running `docker-machine ip dev` in your host terminal) to the domain names used for developing SiR. Here is what you should add to your hosts file:
 
@@ -66,7 +67,9 @@ If you followed the [Requirements](#requirements), after a few seconds you will 
 
  8. If everything worked you should be able to see your SiR application running in your host browser at `huntr.sir.dev`
 
-### Second time and more
+When you want to stop coding, `exit` your VM then stop it with `docker-machine stop dev`.
+
+### Second time and more (~1min)
 
     # Host terminal
     cd C:\Users\SiR\docker
@@ -90,8 +93,15 @@ If you followed the [Requirements](#requirements), after a few seconds you will 
 **ProTips**: One of the many nice things you can do with Cmder is setting persistent aliases such as `alias cd-docker=cd "C:\Users\path\to\my\sir_project\docker"` =). To view and manage your aliases, edit the file located at `C:\cmder_installation_directory\config\aliases`.
 
 
-## WTF!? You're using a Docker container as a VM!?
-Indeed, I could have split this big image in many smaller images (i.e. PHP5.6 linked with PHP-FPM linked with NGINX linked with NodeJS linked with Ruby, etc.) but I just wanted to keep it really simple and independent from the host OS. 
-This is meant to be a fast deployable development environment nothing else.
+## Troubleshooting
 
+### `npm install` fails during `make init`
+This issue comes from your application shared folders. The only way to solve it is by running `npm install` directly on your host machine. 
+Here is how you will do:
+
+ 1. Stop your VM with `docker-machine stop dev`.
+ 1. [Install NodeJS](https://nodejs.org/download/) on the host machine.
+ 2. [Install Python version 2.*](https://www.python.org/downloads/) on the host machine.
+ 3. Go to your SiR application root sources then run `npm install`.
+ 4. Restart your VM with `docker-machine-dev` in your `docker` folder.
 
