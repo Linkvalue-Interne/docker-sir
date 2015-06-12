@@ -96,12 +96,12 @@ When you want to stop coding, `exit` your VM then stop it with `docker-machine s
 ## Troubleshooting
 
 ### `npm install` fails during `make init`
-This issue comes from your application shared folders. The only way to solve it is by running `npm install` directly on your host machine. 
-Here is how you will do:
+This issue comes from your application shared folders, `vboxsf` seems to be not powerful enough to handle so many files.
+There are currently 2 workarounds for this kind of issue:
 
- 1. Stop your VM with `docker-machine stop dev`.
- 1. [Install NodeJS](https://nodejs.org/download/) on the host machine.
- 2. [Install Python version 2.*](https://www.python.org/downloads/) on the host machine.
- 3. Go to your SiR application root sources then run `npm install`.
- 4. Restart your VM with `docker-machine-dev` in your `docker` folder.
+- In your application container, copy the `package.json` file to another (not shared) directory. Run `npm install` there. Then copy back the `node_modules` directory to the root of you application.
+
+or
+
+- Run `npm install` on your host machine (it requires you to have `npm` already installed on your host of course). 
 
