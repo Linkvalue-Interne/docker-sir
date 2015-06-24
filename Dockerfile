@@ -70,11 +70,13 @@ COPY nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 
 
 
-# Update permissions on SiR cache folders
+# Set SiR cache folders
 WORKDIR /dev/shm
 RUN \
   mkdir session && \
-  chmod -R 777 session
+  chmod -R 777 session && \
+  mkdir sir && \
+  chmod -R 777 sir
 
 
 
