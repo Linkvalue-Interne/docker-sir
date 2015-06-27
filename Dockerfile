@@ -1,6 +1,8 @@
 #
 # Dockerfile for Symfony application development
 #
+# To run this image in a container, please use the associated docker-compose.yml file
+#
 
 
 
@@ -70,13 +72,9 @@ COPY nginx/sites-enabled/default /etc/nginx/sites-enabled/default
 
 
 
-# Set SiR cache folders
-WORKDIR /dev/shm
+# Allow www-data to use "sudo" to run commands "as root"
 RUN \
-  mkdir session && \
-  chmod -R 777 session && \
-  mkdir sir && \
-  chmod -R 777 sir
+  echo "www-data ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo)
 
 
 
